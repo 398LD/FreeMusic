@@ -155,7 +155,7 @@ function loadList() {
 
 function down(index) {
 	var music = playlist[index];
-	var playurl = music.playurl;
+	var playurl = getPlayUrl(music.songmid);
 	var songname = music.songname;
 	var singer = music.singer;
 	window.location.href = server + "/search/download?playurl=" + encodeURIComponent(playurl) + "&fileName=" + songname + "-" + singer;
