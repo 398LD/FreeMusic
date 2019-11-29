@@ -1,0 +1,12 @@
+{
+  "index.html": {
+    "href": "index.html",
+    "resources": [
+      "css/bootstrap.css",
+      "js/jquery-3.3.1.js",
+      "js/bootstrap.js"
+    ],
+    "refer": [],
+    "priority": 0
+  }
+}
