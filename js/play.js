@@ -61,6 +61,16 @@ $(function() {
 
 	})
 
+	$("#audio").on("error", function() {
+		alert("播放地址获取失败,自动为您切换到下一首");
+		playindex++;
+		if(playindex >= playlist.length) {
+			//到最后一条了 从新开始
+			playindex = 0;
+		}
+		play(playindex);
+	});
+
 })
 
 //加入到队列
@@ -360,7 +370,6 @@ function getPlayUrl(songmid) {
 		async: false,
 		success: function(data) {
 			result = data;
-
 		},
 		error: function() {
 			console.log("获取播放地址失败");
