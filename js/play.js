@@ -42,16 +42,8 @@ $(function() {
 		}
 		play(playindex);
 	})
-
+	refresh();
 	//查询随机推荐的音乐
-	$.get(server + "/search/random", function(data) {
-		$("#randomtui").text("");
-		$.each(JSON.parse(data), function(index, item) {
-
-			$("#randomtui").append("<div onclick='join(this)' data='" + JSON.stringify(item) + "' class='col-xs-4'><img src='" + item.photourl + "'><p>" + sub(item.songname, 7) + "</p></div>");
-		});
-
-	});
 
 	$.get(server + "/search/top", function(data) {
 		$("#top").text("");
@@ -61,17 +53,28 @@ $(function() {
 
 	})
 
-	$("#audio").on("error", function() {
-		alert("播放地址获取失败,自动为您切换到下一首");
-		playindex++;
-		if(playindex >= playlist.length) {
-			//到最后一条了 从新开始
-			playindex = 0;
-		}
-		play(playindex);
-	});
-
 })
+
+function refresh() {
+	$.get(server + "/search/random", function(data) {
+		$("#randomtui").text("");
+		$.each(JSON.parse(data), function(index, item) {
+
+			$("#randomtui").append("<div onclick='join(this)' data='" + JSON.stringify(item) + "' class='col-xs-4'><img src='" + item.photourl + "'><p>" + sub(item.songname, 7) + "</p></div>");
+		});
+	});
+}
+
+function rest() {
+	$("#audio")[0].pause();
+	$("#audio").attr("src", "");
+	$("#play-img").attr("src", "img/default.jpg");
+	$(".music-name").text("暂无音乐");
+	$("#music-singer").text("暂无歌手");
+	$(".play>span").attr("class", "glyphicon glyphicon-play");
+	$("#play2").attr("class", "glyphicon glyphicon-play");
+	$("#play-img").css("animation-play-state", "paused");
+}
 
 //加入到队列
 function join(obj) {
@@ -217,7 +220,14 @@ function init(index) {
 		var music = playlist[index];
 		//初始化歌曲信息
 		var playurl = getPlayUrl(music.songmid);
-		console.log(playurl)
+		console.log(playurl);
+		if(playurl.length == 0) {
+			alert("播放地址获取失败");
+			playlist.splice(playindex, 1);
+			localStorage.setItem("playlist", JSON.stringify(playlist.reverse()));
+			loadList();
+			return false;
+		}
 		$("#audio").attr("src", playurl);
 		$("#play-img").attr("src", music.photourl);
 		$(".music-name").text(sub(music.songname, 14));
@@ -243,6 +253,7 @@ function init(index) {
 
 		})
 	}
+	return true;
 
 }
 
@@ -250,20 +261,27 @@ var isPlay = false;
 
 //播放
 function play(index) {
-	init(index);
-	//开始旋转
-	$("#lrc").css("transform", "translateY(0px)");
-	$("#play-img").css("animation-play-state", "running");
-	$(".play>span").attr("class", "glyphicon glyphicon-pause");
-	$("#play2").attr("class", "glyphicon glyphicon-pause");
+	var status = init(index);
+	if(status) {
+		//开始旋转
+		$("#lrc").css("transform", "translateY(0px)");
+		$("#play-img").css("animation-play-state", "running");
+		$(".play>span").attr("class", "glyphicon glyphicon-pause");
+		$("#play2").attr("class", "glyphicon glyphicon-pause");
 
-	$(".list-table>tr>td").css("color", "black");
-	$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
+		$(".list-table>tr>td").css("color", "black");
+		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
 
-	/*播放*/
-	$("#audio")[0].play();
-	isPlay = true;
+		/*播放*/
+		$("#audio")[0].play();
+		isPlay = true;
+	}
+
 }
+
+$("#refresh").click(function() {
+	refresh();
+})
 
 //暂停
 function pause() {
