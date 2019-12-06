@@ -227,3 +227,7 @@
 		-webkit-transform: rotate(360deg);
 	}
 }
+
+.jdt-line-in {
+	transition: width 0.1s linear 0s;
+}

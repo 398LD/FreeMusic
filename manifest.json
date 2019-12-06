@@ -178,8 +178,8 @@
 				}
 			}
 		},
-		"ads": {"rp":false,"splash":true,"push":false},
-		"adid": ""
+		"ads": {"rp":true,"splash":true,"push":true},
+		"adid": "126498240411"
 	},
 	"fullscreen": true,
 	"dependencies": {

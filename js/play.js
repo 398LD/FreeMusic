@@ -97,22 +97,35 @@ function join(obj) {
 }
 
 function remove(index) {
+	console.log(index)
 	playlist.splice(index, 1);
 	localStorage.setItem("playlist", JSON.stringify(playlist.reverse()));
 	loadList();
+	console.log(playlist.length)
+
+	if(index == playindex && playlist.length == 0) {
+		rest()
+		return;
+	}
+
+	if(index == playlist.length && playindex == index) {
+		playindex--;
+		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
+		play(playindex);
+	}
+
 	if(index == playindex) {
-		play(playindex - 1);
+		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
+		play(playindex);
 	}
 
 	if(index < playindex) {
 		playindex--;
 		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
 	}
-
 	if(index > playindex) {
 		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
 	}
-
 }
 
 $(".jdt-line").click(function(e) {
@@ -226,6 +239,7 @@ function init(index) {
 			playlist.splice(playindex, 1);
 			localStorage.setItem("playlist", JSON.stringify(playlist.reverse()));
 			loadList();
+			$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
 			return false;
 		}
 		$("#audio").attr("src", playurl);
@@ -261,20 +275,23 @@ var isPlay = false;
 
 //播放
 function play(index) {
-	var status = init(index);
-	if(status) {
-		//开始旋转
-		$("#lrc").css("transform", "translateY(0px)");
-		$("#play-img").css("animation-play-state", "running");
-		$(".play>span").attr("class", "glyphicon glyphicon-pause");
-		$("#play2").attr("class", "glyphicon glyphicon-pause");
+	if(playlist.length > 0) {
+		var status = init(index);
+		if(status) {
+			//开始旋转
+			$("#lrc").css("transform", "translateY(0px)");
+			$("#play-img").css("animation-play-state", "running");
+			$(".play>span").attr("class", "glyphicon glyphicon-pause");
+			$("#play2").attr("class", "glyphicon glyphicon-pause");
 
-		$(".list-table>tr>td").css("color", "black");
-		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
+			$(".list-table>tr>td").css("color", "black");
+			$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
 
-		/*播放*/
-		$("#audio")[0].play();
-		isPlay = true;
+			/*播放*/
+			$("#audio")[0].play();
+			isPlay = true;
+		}
+
 	}
 
 }
@@ -318,12 +335,14 @@ $(".play,#play2").click(function() {
 	if(isPlay) {
 		pause();
 	} else {
-		$("#audio")[0].play();
-		$("#play-img").css("animation-play-state", "running");
-		$(".play>span").attr("class", "glyphicon glyphicon-pause");
-		$("#play2").attr("class", "glyphicon glyphicon-pause");
-		$(".list-table>tr>td").css("color", "black");
-		$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
+		if(playlist.length > 0) {
+			$("#audio")[0].play();
+			$("#play-img").css("animation-play-state", "running");
+			$(".play>span").attr("class", "glyphicon glyphicon-pause");
+			$("#play2").attr("class", "glyphicon glyphicon-pause");
+			$(".list-table>tr>td").css("color", "black");
+			$($(".list-table>tr").eq(playindex).children("td").get(0)).css("color", "#00c5a0");
+		}
 	}
 	isPlay = !isPlay
 })
