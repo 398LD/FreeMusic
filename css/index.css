@@ -24,11 +24,11 @@
 	text-align: right;
 	font-size: 18px;
 }
-.search span{
-	
+
+.search span {
 	width: 100%;
-	
 }
+
 .title {
 	text-align: center;
 	font-size: 16px;
@@ -37,6 +37,8 @@
 
 .carousel-inner .item img {
 	/*border-radius: 30px;*/
+	height: 200px;
+	width: 100%;
 }
 
 .carousel-control .left {
@@ -52,6 +54,10 @@
 .center-bar .phb {
 	height: 100%;
 	text-align: center;
+}
+
+.phb p {
+	margin-top: 5px;
 }
 
 .center-bar .phb div {
@@ -205,6 +211,7 @@
 	font-size: 17px;
 	color: #00C5A0;
 }
+
 .music-play {
 	height: 70px;
 	line-height: 70px;

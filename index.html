@@ -13,6 +13,33 @@
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/player.css" />
 		<script type="text/javascript" src="js/loading.js"></script>
+		<script>
+			$(function() {
+				$.get("http://47.96.174.217/kexunMusic/queryAllsSlideshow", function(data) {
+					$.each(data.sList, function(index, item) {
+						if(index == 0) {
+							$("#lbty").append('<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>')
+							$("#lbt").append('<div class="item active content" onclick="window.open(\'' + item.sAddress + '\')">' +
+								'<img src="http://47.96.174.217/kexunMusicFile/ImageFile/' + item.sImg + '" alt="...">' +
+								'<div class="carousel-caption">' +
+								'</div>' +
+								'</div>');
+
+						} else {
+							$("#lbty").append('<li data-target="#carousel-example-generic" data-slide-to="' + index + '"></li>')
+							$("#lbt").append('<div title="' + item.sName + '" class="item content" onclick="window.open(\'' + item.sAddress + '\')">' +
+								'<img src="http://47.96.174.217/kexunMusicFile/ImageFile/' + item.sImg + '" alt="...">' +
+								'<div class="carousel-caption">' +
+								'</div>' +
+								'</div>');
+						}
+
+					});
+
+				});
+			})
+
+		</script>
 	</head>
 
 	<body>
@@ -30,15 +57,15 @@
 		<!--轮播图开始-->
 		<div id="carousel-example-generic" style="margin-top: 50px;" class="carousel slide" data-ride="carousel">
 			<!-- Indicators -->
-			<ol class="carousel-indicators">
-				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			<ol class="carousel-indicators" id="lbty">
+				<!--<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
 				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
 			</ol>
 
 			<!-- Wrapper for slides -->
-			<div class="carousel-inner" role="listbox">
-				<div class="item active">
+			<div class="carousel-inner" role="listbox" id="lbt">
+				<!--<div class="item active">
 					<img src="img/1.jpg" alt="...">
 					<div class="carousel-caption">
 					</div>
@@ -47,7 +74,7 @@
 					<img src="img/2.jpg" alt="...">
 					<div class="carousel-caption">
 					</div>
-				</div>
+				</div>-->
 			</div>
 
 			<!-- Controls -->
@@ -72,19 +99,19 @@
 				<div>
 					<span class="">讯</span>
 				</div>
-				<p>排行榜</p>
+				<p>歌单</p>
 			</div>
 			<div class="col-xs-3 phb">
 				<div>
 					<span class="">音</span>
 				</div>
-				<p>排行榜</p>
+				<p>歌手管</p>
 			</div>
 			<div class="col-xs-3 phb">
 				<div>
 					<span class="">乐</span>
 				</div>
-				<p>排行榜</p>
+				<p>专辑</p>
 			</div>
 		</div>
 		<div class="item-title">
