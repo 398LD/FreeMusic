@@ -9,6 +9,11 @@
 	transition: top 0.5s ease;
 	background-color: whitesmoke;
 }
+.top-img{
+	width: 60px;
+	padding-left: 10px;
+	float: left;
+}
 
 .play-top {
 	width: 100%;

@@ -418,7 +418,7 @@ function getPlayUrl(songmid) {
 
 $("#play-img").click(function() {
 	$("body").css("overflow-y", "hidden")
-	$("#play").css("top", 0);
+	$("#play").css("top", 28);
 });
 $("#close").click(function() {
 	$("body").css("overflow-y", "auto")
@@ -435,7 +435,6 @@ $("#music-list").click(function() {
 });
 
 $("#list").click(function() {
-
 	$("body").css("overflow-y", "hidden")
 	$("#play").css("overflow-y", "hidden")
 	$(".list").css("top", 0);

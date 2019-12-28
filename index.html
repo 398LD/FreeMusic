@@ -13,6 +13,11 @@
 		<link rel="stylesheet" href="css/index.css" />
 		<link rel="stylesheet" href="css/player.css" />
 		<script type="text/javascript" src="js/loading.js"></script>
+		<style>
+			.top {
+				padding-top: 28px;
+			}
+		</style>
 		<script>
 			$(function() {
 				$.get("http://47.96.174.217/kexunMusic/queryAllsSlideshow", function(data) {
@@ -38,14 +43,13 @@
 
 				});
 			})
-
 		</script>
 	</head>
 
 	<body>
 		<div class="top">
 			<div class="col-xs-3 user">
-				<span class=" glyphicon glyphicon-user"></span>
+				<span class=" glyphicon glyphicon-user" onclick="window.location.href='login.html'"></span>
 			</div>
 			<div class="col-xs-6 title">
 				科讯Music
@@ -116,8 +120,8 @@
 		</div>
 		<div class="item-title">
 			<div class="col-xs-5" style="font-weight: bold; font-size: 16px;">随机推荐</div>
-			<div class="col-xs-4"></div>
-			<div class="col-xs-3" id="refresh" style="text-align: right;">换一批 &nbsp;<span class="glyphicon glyphicon-refresh"></span></div>
+			<div class="col-xs-3"></div>
+			<div class="col-xs-4" id="refresh" style="text-align: right;">换一批 &nbsp;<span class="glyphicon glyphicon-refresh"></span></div>
 		</div>
 		<!--歌单开始-->
 		<div class="gd-item" style="padding-right: 10px;" id="randomtui">
@@ -257,5 +261,31 @@
 
 	<script src="js/config.js"></script>
 	<script src="js/play.js"></script>
+	<script>
+		document.addEventListener('plusready', function() {
+			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
+			plus.navigator.setStatusBarStyle('dark');
+			plus.key.addEventListener('backbutton', function() {
+				if($("#play").css("top") != "5000px" || $(".list").css("top") != "5000px" || $(".music-list").css("top") != "5000px" || $(".search-page").css("left") != "5000px") {
+					//关闭播放界面
+					$("body").css("overflow-y", "auto");
+					$("#play").css("top", 5000);
+					$("body").css("overflow-y", "auto");
+					$("#play").css("overflow-y", "auto");
+					$(".list").css("top", 5000);
+					$(".music-list").css("top", 5000);
+					$("body").css("overflow", "auto");
+					$(".search-page").css("left", 5000);
+				} else {
+					plus.nativeUI.confirm("退出科讯音乐？", function(event) {
+						if(event.index != 1) {
+							plus.runtime.quit();
+						}
+					}, null, ["确定", "取消"]);
+				}
+
+			}, false);
+		});
+	</script>
 
 </html>
