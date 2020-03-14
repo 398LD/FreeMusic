@@ -19,6 +19,9 @@
 			}
 		</style>
 		<script>
+			$.ajaxSetup({ //设置全局ajax选项参数
+			async: false
+			})
 			$(function() {
 				$.get("http://47.96.174.217/kexunMusic/queryAllsSlideshow", function(data) {
 					$.each(data.sList, function(index, item) {
