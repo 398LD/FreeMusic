@@ -418,7 +418,7 @@ function getPlayUrl(songmid) {
 
 $("#play-img").click(function() {
 	$("body").css("overflow-y", "hidden")
-	$("#play").css("top", 28);
+	$("#play").css("top", 0);
 });
 $("#close").click(function() {
 	$("body").css("overflow-y", "auto")
